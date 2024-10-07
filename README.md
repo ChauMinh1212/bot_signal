@@ -1,0 +1,1 @@
+Cho trước 1 mảng ticker và MA nếu giá hiện tại cắt lên đường MA cho tín hiệu LONG
