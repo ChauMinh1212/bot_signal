@@ -16,7 +16,7 @@ async function runBot() {
 }
 
 //Chạy lúc phút thứ 2 mỗi giờ
-cron.schedule('25 * * * *', () => {
+cron.schedule('27 * * * *', () => {
     runBot();
 });
 
