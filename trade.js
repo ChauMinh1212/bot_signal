@@ -21,7 +21,7 @@ function calculateMA(closingPrices, period) {
 }
 
 // Mua Futures khi giá cắt lên MA và đóng khi cắt xuống MA
-export async function tradeFutures(symbol, maPeriod = 10) {
+export async function tradeFutures(symbol, maPeriod) {
   let position = null; // null = không có lệnh, 'long' = đang mở lệnh long
   let entryPrice = 0;
   
