@@ -55,7 +55,7 @@ export async function tradeFutures(symbol, maPeriod, position) {
       TICKER_WITH_MA[index].position = 'long'
       // console.log(`Đã mở lệnh long tại giá ${entryPrice}`);
       await sendTelegramMessage(
-        `${symbol} cắt lên đường MA-${maPeriod} với chart ${process.env.PERIOD}`,
+        `${symbol} cắt lên đường MA-${maPeriod} với chart ${process.env.PERIOD} giá hiện tại ${currentPrice}`,
         process.env.TELEGRAM_BOT_TOKEN,
         process.env.TELEGRAM_GROUP_ID
       )
@@ -77,7 +77,7 @@ export async function tradeFutures(symbol, maPeriod, position) {
       console.log(`Đã đóng lệnh long. Lợi nhuận: ${profit}`);
       TICKER_WITH_MA[index].position = null
       await sendTelegramMessage(
-        `${symbol} cắt xuống đường MA-${maPeriod} với chart ${process.env.PERIOD}`,
+        `${symbol} cắt xuống đường MA-${maPeriod} với chart ${process.env.PERIOD} giá hiện tại ${currentPrice}`,
         process.env.TELEGRAM_BOT_TOKEN,
         process.env.TELEGRAM_GROUP_ID
       )
