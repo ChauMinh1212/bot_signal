@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SMA } from 'technicalindicators';
 import { sendTelegramMessage } from './telegram.js';
+import { TICKER, TICKER_WITH_MA } from './ticker.js';
 // import binanceApiNode from 'binance-api-node';
 
 // API Key và Secret từ Binance
@@ -21,15 +22,15 @@ function calculateMA(closingPrices, period) {
 }
 
 // Mua Futures khi giá cắt lên MA và đóng khi cắt xuống MA
-export async function tradeFutures(symbol, maPeriod) {
-  let position = null; // null = không có lệnh, 'long' = đang mở lệnh long
+export async function tradeFutures(symbol, maPeriod, position) {
   let entryPrice = 0;
+  const index = TICKER_WITH_MA.findIndex(item => item.ticker == symbol)
   
   try {
     // Lấy dữ liệu nến gần nhất từ Binance
     const candles = await axios.get(`https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=${process.env.PERIOD}&limit=300`);
     
-    const closingPrices = candles.data.map(c => parseFloat(c[4])); // Lấy giá đóng cửa trừ giá hiện tại
+    const closingPrices = candles.data.map(c => parseFloat(c[4])); // Lấy giá đóng cửa
     
     // Tính MA dựa trên giá đóng cửa
     const maValues = calculateMA(closingPrices, maPeriod);
@@ -51,10 +52,10 @@ export async function tradeFutures(symbol, maPeriod) {
       // });
       
       entryPrice = currentPrice;
-      position = 'long';
+      TICKER_WITH_MA[index].position = 'long'
       // console.log(`Đã mở lệnh long tại giá ${entryPrice}`);
       await sendTelegramMessage(
-        `Vào lệnh LONG: ${symbol}`,
+        `${symbol} cắt lên đường MA-${maPeriod} với chart ${process.env.PERIOD}`,
         process.env.TELEGRAM_BOT_TOKEN,
         process.env.TELEGRAM_GROUP_ID
       )
@@ -74,7 +75,12 @@ export async function tradeFutures(symbol, maPeriod) {
       
       const profit = currentPrice - entryPrice;
       console.log(`Đã đóng lệnh long. Lợi nhuận: ${profit}`);
-      position = null;
+      TICKER_WITH_MA[index].position = null
+      await sendTelegramMessage(
+        `${symbol} cắt xuống đường MA-${maPeriod} với chart ${process.env.PERIOD}`,
+        process.env.TELEGRAM_BOT_TOKEN,
+        process.env.TELEGRAM_GROUP_ID
+      )
     }
 
   } catch (error) {

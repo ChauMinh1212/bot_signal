@@ -68,7 +68,7 @@ function backtestMAWithPrice(data, maPeriod) {
 
 // Hàm tìm ra đường MA có lợi nhuận cộng dồn cao nhất khi so sánh với giá
 async function findBestMA(ticker) {
-    const data = await getHistoricalData(ticker, '1d', 300);
+    const data = await getHistoricalData(ticker, '4h', 300);
 
     let bestProfit = -Infinity;
     let bestMA = 0;
