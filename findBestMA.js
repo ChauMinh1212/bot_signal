@@ -75,7 +75,7 @@ async function findBestMA(ticker) {
 
     for (let maPeriod = 5; maPeriod <= 100; maPeriod++) {
         const {profit, hasSignal} = backtestMAWithPrice(data.slice(0, -1), maPeriod);
-        if (profit > bestProfit) {
+        if (profit >= bestProfit) {
             bestProfit = profit;
             bestMA = maPeriod;
         }
