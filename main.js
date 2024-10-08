@@ -20,3 +20,6 @@ cron.schedule('* * * * *', () => {
     runBot();
 });
 
+console.log(`Bot start with period ${process.env.PERIOD}`);
+
+
