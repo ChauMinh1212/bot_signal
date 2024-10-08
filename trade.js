@@ -29,7 +29,7 @@ export async function tradeFutures(symbol, maPeriod) {
     // Lấy dữ liệu nến gần nhất từ Binance
     const candles = await axios.get(`https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=${process.env.PERIOD}&limit=300`);
     
-    const closingPrices = candles.data.map(c => parseFloat(c[4])).slice(0, -1); // Lấy giá đóng cửa trừ giá hiện tại
+    const closingPrices = candles.data.map(c => parseFloat(c[4])); // Lấy giá đóng cửa trừ giá hiện tại
     
     // Tính MA dựa trên giá đóng cửa
     const maValues = calculateMA(closingPrices, maPeriod);

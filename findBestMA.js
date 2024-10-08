@@ -63,18 +63,18 @@ function backtestMAWithPrice(data, maPeriod) {
         cumulativeProfit += profitPercent;
     }
 
-    return cumulativeProfit;
+    return {profit: cumulativeProfit, hasSignal: !position ? false : true};
 }
 
 // Hàm tìm ra đường MA có lợi nhuận cộng dồn cao nhất khi so sánh với giá
 async function findBestMA(ticker) {
-    const data = await getHistoricalData(ticker, '1h', 300);
+    const data = await getHistoricalData(ticker, '1d', 300);
 
     let bestProfit = -Infinity;
     let bestMA = 0;
 
     for (let maPeriod = 5; maPeriod <= 100; maPeriod++) {
-        const profit = backtestMAWithPrice(data, maPeriod);
+        const {profit, hasSignal} = backtestMAWithPrice(data.slice(0, -1), maPeriod);
         if (profit > bestProfit) {
             bestProfit = profit;
             bestMA = maPeriod;
@@ -100,4 +100,4 @@ const mapped = Promise.all(TICKER.map((item) => {
     return findBestMA(item)
 }))
 
-console.log(mapped.then(res => console.log(res.sort((a, b) => b.profit - a.profit).slice(0, 20))));
+console.log(mapped.then(res => console.log(res.sort((a, b) => b.profit - a.profit))));
