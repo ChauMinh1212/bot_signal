@@ -100,4 +100,4 @@ const mapped = Promise.all(TICKER.map((item) => {
     return findBestMA(item)
 }))
 
-console.log(mapped.then(res => console.log(res.sort((a, b) => b.profit - a.profit).slice(0, 40))));
+console.log(mapped.then(res => console.log(res.sort((a, b) => b.profit - a.profit).filter(item => item.ma >= 20))));
