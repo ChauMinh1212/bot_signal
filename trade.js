@@ -38,7 +38,7 @@ export async function tradeFutures(symbol, maPeriod, position) {
     const previousPrice = closingPrices[closingPrices.length - 2];
     const currentMA = maValues[maValues.length - 1];
     const previousMA = maValues[maValues.length - 2];
-    
+
     // Kiểm tra nếu giá cắt lên MA (mở lệnh long)
     if (previousPrice < previousMA && currentPrice > currentMA && position === null) {
       // console.log(`Mở lệnh long tại giá ${currentPrice}`);
@@ -62,7 +62,7 @@ export async function tradeFutures(symbol, maPeriod, position) {
     }
     
     // Kiểm tra nếu giá cắt xuống MA (đóng lệnh long)
-    if (previousPrice > previousMA && currentPrice < currentMA && position === 'long') {
+    if (currentPrice < currentMA && position === 'long') {
       // console.log(`Đóng lệnh long tại giá ${currentPrice}`);
       
       // Đóng lệnh long (bán)
