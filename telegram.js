@@ -6,7 +6,8 @@ export async function sendTelegramMessage(message, telegramApiToken, telegramCha
     try {
         await axios.post(telegramApiUrl, {
             chat_id: telegramChatId,
-            text: message
+            text: message,
+            parse_mode: 'Markdown'
         });
         console.log('Đã gửi tin nhắn tới Telegram:', message);
     } catch (error) {
