@@ -48,7 +48,7 @@ const sendNewsToTelegramV2 = async (listArticlesSentiment) => {
     const messages = []
 
     for (const articlesSentiment of listArticlesSentiment) {
-        if (count === 3 || index == listArticlesSentiment.length - 1) {
+        if (count === 3 || (count != 3 && index == listArticlesSentiment.length - 1)) {
             await sendTelegramMessage(messages.join(
                 `
             ------------------------------------------------
@@ -59,7 +59,8 @@ const sendNewsToTelegramV2 = async (listArticlesSentiment) => {
             continue
         }
 
-        messages[count] = `
+        messages[count] = 
+        `
         ${articlesSentiment.sentiment === 'positive' ? '🟢 TÍCH CỰC' : articlesSentiment.sentiment === 'negative' ? '🔴 TIÊU CỰC' : '⚪ TRUNG LẬP'}
         Tin mới: *${articlesSentiment.article.title}*
         Link: ${articlesSentiment.article.url}
