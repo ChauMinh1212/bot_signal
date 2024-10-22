@@ -44,16 +44,18 @@ const analyzeSentiment = (text) => {
 //3 tin gửi 1 lần
 const sendNewsToTelegramV2 = async (listArticlesSentiment) => {
     let count = 0
+    let index = 0
     const messages = []
 
     for (const articlesSentiment of listArticlesSentiment) {
-        if (count === 3) {
+        if (count === 3 || index == listArticlesSentiment.length - 1) {
             await sendTelegramMessage(messages.join(
                 `
             ------------------------------------------------
             `
             ), process.env.TELEGRAM_BOT_TOKEN, process.env.TELEGRAM_GROUP_NEWS_ID)
             count = 0
+            index++
             continue
         }
 
@@ -64,6 +66,7 @@ const sendNewsToTelegramV2 = async (listArticlesSentiment) => {
         Tóm tắt: ${articlesSentiment.article.description}
         `
         count++
+        index++
     }
 };
 
