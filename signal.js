@@ -41,8 +41,8 @@ export const runBot = async () => {
             TICKER_WITH_MA[index] = {
                 ...item,
                 position: 'long',
-                lastPrice: item.lastPrice,
-                lastMA: item.lastMA,
+                lastPrice: nowPrices,
+                lastMA: nowMA,
             }
         }
 
@@ -58,8 +58,8 @@ export const runBot = async () => {
             TICKER_WITH_MA[index] = {
                 ...item,
                 position: null,
-                lastPrice: item.lastPrice,
-                lastMA: item.lastMA,
+                lastPrice: nowPrices,
+                lastMA: nowMA,
             }
         }
 
