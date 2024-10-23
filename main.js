@@ -3,6 +3,7 @@ import { tradeFutures } from "./trade.js";
 import cron from 'node-cron'
 import 'dotenv/config'
 import { checkNews } from "./scanNews.js";
+import { listPosition } from "./listPosition.js";
 
 async function runBot() {
     for(let i=0; i <= TICKER_WITH_MA.length - 1; i++){
@@ -18,6 +19,12 @@ cron.schedule('* * * * *', () => {
 cron.schedule('* * * * *', () => {
     checkNews();
 });
+
+cron.schedule('*/15 * * * *', () => {
+    listPosition();
+});
+
+//Chay mỗi 15p
 
 console.log(`Bot start with period ${process.env.PERIOD}`);
 
