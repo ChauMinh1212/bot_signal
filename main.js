@@ -16,15 +16,18 @@ cron.schedule('* * * * *', () => {
     runBot();
 });
 
-cron.schedule('* * * * *', () => {
+cron.schedule('*/30 * * * *', () => {
     checkNews();
 });
 
-cron.schedule('*/15 * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
     listPosition();
 });
 
 //Chay mỗi 15p
+
+//Chạy lần đầu
+// runBot()
 
 console.log(`Bot start with period ${process.env.PERIOD}`);
 
