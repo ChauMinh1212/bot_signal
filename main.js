@@ -10,9 +10,9 @@ cron.schedule('* * * * *', () => {
 });
 
 //Chạy mỗi 30p
-cron.schedule('*/30 * * * *', () => {
-    checkNews();
-});
+// cron.schedule('*/30 * * * *', () => {
+//     checkNews();
+// });
 
 //Chay mỗi 5p
 cron.schedule('*/5 * * * *', () => {
