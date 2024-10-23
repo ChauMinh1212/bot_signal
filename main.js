@@ -1,33 +1,26 @@
-import { TICKER_WITH_MA } from "./ticker.js";
-import { tradeFutures } from "./trade.js";
-import cron from 'node-cron'
-import 'dotenv/config'
-import { checkNews } from "./scanNews.js";
+import 'dotenv/config';
+import cron from 'node-cron';
 import { listPosition } from "./listPosition.js";
-
-async function runBot() {
-    for(let i=0; i <= TICKER_WITH_MA.length - 1; i++){
-        await tradeFutures(TICKER_WITH_MA[i].ticker, TICKER_WITH_MA[i].ma, TICKER_WITH_MA[i].position)
-    }
-}
+import { checkNews } from "./scanNews.js";
+import { firstRun, runBot } from "./signal.js";
 
 //Chạy mỗi phút
 cron.schedule('* * * * *', () => {
     runBot();
 });
 
+//Chạy mỗi 30p
 cron.schedule('*/30 * * * *', () => {
     checkNews();
 });
 
+//Chay mỗi 5p
 cron.schedule('*/5 * * * *', () => {
     listPosition();
 });
 
-//Chay mỗi 15p
-
 //Chạy lần đầu
-// runBot()
+firstRun()
 
 console.log(`Bot start with period ${process.env.PERIOD}`);
 

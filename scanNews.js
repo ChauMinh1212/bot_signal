@@ -49,11 +49,13 @@ const sendNewsToTelegramV2 = async (listArticlesSentiment) => {
 
     for (const articlesSentiment of listArticlesSentiment) {
         if (count === 3 || (count != 3 && index == listArticlesSentiment.length - 1)) {
-            await sendTelegramMessage(messages.join(
+            await sendTelegramMessage({
+                message: messages.join(
                 `
-            ------------------------------------------------
-            `
-            ), process.env.TELEGRAM_BOT_TOKEN, process.env.TELEGRAM_GROUP_NEWS_ID)
+                -----------------
+                `),
+                chatId: process.env.TELEGRAM_GROUP_NEWS_ID
+            })
             count = 0
             index++
             continue
@@ -91,3 +93,5 @@ export const checkNews = async () => {
         console.log('loi khi gui tin');
     }
 };
+
+checkNews()

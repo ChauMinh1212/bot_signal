@@ -21,15 +21,17 @@ const getListPosition = async () => {
 }
 
 const sendTelegram = async (listPosition) => {
-    const message = listPosition.map(item => 
+    const message = listPosition.map(item =>
     `
     Mã: ${item.unRealizedProfit > 0 ? '🟢' : '🔴'} ${item.symbol}\nPNL: ${parseFloat(item.unRealizedProfit).toFixed(2)}
     `)
-
-    await sendTelegramMessage(message.join(
-    `
-    -------------
-    `), process.env.TELEGRAM_BOT_TOKEN, process.env.TELEGRAM_GROUP_POSITION_ID)
+    await sendTelegramMessage({
+        message: message.join(
+            `
+            -------------
+            `),
+        chatId: process.env.TELEGRAM_GROUP_POSITION_ID
+    })
 }
 
 export const listPosition = async () => {

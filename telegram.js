@@ -1,13 +1,13 @@
 import axios from "axios";
 
-export async function sendTelegramMessage(message, telegramApiToken, telegramChatId) {
-    const telegramApiUrl = `https://api.telegram.org/bot${telegramApiToken}/sendMessage`;
+export async function sendTelegramMessage({message, chatId, parseMode}) {
+    const telegramApiUrl = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
     
     try {
         await axios.post(telegramApiUrl, {
-            chat_id: telegramChatId,
+            chat_id: chatId,
             text: message,
-            parse_mode: 'Markdown'
+            parse_mode: !parseMode ? 'Markdown' : parseMode
         });
         console.log('Đã gửi tin nhắn tới Telegram:', message);
     } catch (error) {
