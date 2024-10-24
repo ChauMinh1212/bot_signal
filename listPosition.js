@@ -23,7 +23,7 @@ const getListPosition = async (apiKey, secretKey) => {
 const sendTelegram = async (listPosition, chatId) => {
     const message = listPosition.map(item =>
     `
-    Mã: ${item.unRealizedProfit > 0 ? '🟢' : '🔴'} ${item.symbol}\nPNL: ${parseFloat(item.unRealizedProfit).toFixed(2)}
+    ${item.unRealizedProfit > 0 ? '🟢' : '🔴'} Mã: ${item.symbol}\nPNL: ${parseFloat(item.unRealizedProfit).toFixed(2)}\n\nVị thế: ${item.positionAmt > 0 ? 'LONG' : 'SHORT'}\n\nGiá vào: ${item.entryPrice}\nGiá hiện tại: ${item.markPrice}
     `)
     await sendTelegramMessage({
         message: message.join(
